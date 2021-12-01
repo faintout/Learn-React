@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="../node_modules/babel-standalone/babel.js"></script>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="../node_modules/moment/moment.js"></script>
+    <style>
+        .Font28{
+            font-size: 28px;
+        }
+    </style>
+    <script type="text/babel">
+        // const element = <div>{
+        //     (function(){
+        //         return 'ceshi shuju '
+        //     })()
+        // }
+        //     </div>
+        //写法一：
+        //bind改变this指向
+        class Head extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    data:'is test data'        
+                }
+            }
+           	handleFun(){
+                     console.log('this-Head',this);   
+            }
+            render(){
+                return <div onClick= {this.handleFun.bind(this)}>{'Head'}</div>        
+            }
+        }
+        //写法二：
+        //复制到constructor里
+        class Head1 extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    data:'is test data'        
+                }
+                this.handleFun = this.handleFun.bind(this)
+            }
+            handleFun(){
+                console.log('this-Head1',this);   
+            }
+            render(){
+                return <div onClick= {this.handleFun}>{'Head1'}</div>        
+            }
+        }
+        //写法三：
+        //箭头函数方法
+        class Head2 extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    data:'is test data'        
+                }
+            }
+            handleFun = ()=>{
+                    console.log('this-Head2',this);  
+            }
+            render(){
+                return <div onClick= {this.handleFun}>{'Head2'}</div>        
+            }
+        }
+        ReactDOM.render(
+            <div>
+                <Head/>
+                <Head1/>
+                <Head2/>
+            </div>,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+
+</html>
