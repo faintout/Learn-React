@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="../node_modules/babel-standalone/babel.js"></script>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="../node_modules/moment/moment.js"></script>
+    <script src="../node_modules/axios/dist/axios.js"></script>
+    <style>
+        .Font28{
+            font-size: 28px;
+        }
+    </style>
+    <script type="text/babel">
+        // const element = <div>{
+        //     (function(){
+        //         return 'ceshi shuju '
+        //     })()
+        // }
+        //     </div>
+        class Head extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    data:'i am Head Component'
+                }
+            }
+            // clickChangeValue = ()=>{
+            //     this.setState({
+            //         data:'i am Head-Value Component'
+            //     })
+            // }
+            render(){
+                // <div onClick={this.clickChangeValue}>{this.state.data}</div>
+                return <div>
+                    
+                    父组件下发的数据: <div>{this.props.sendVal}</div>
+                    子组件数据上传: <div><button onClick={this.props.handleFun.bind(this,this.state.data)}>子组件数据上传</button></div>
+                    </div>
+            }
+        }
+        class Times extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    times:moment().format('YYYY-MM-DD hh:mm:ss')
+                }
+                setInterval(()=>{
+                    this.setState({
+                        times:moment().format('YYYY-MM-DD hh:mm:ss')
+                    })
+                },1000)
+            }           
+            render(){
+                return <div className ='Font28'>
+                    当前时间为：{this.state.times}
+                    </div>
+            }
+        }
+        class Element extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    data:'',
+                    handleVal:null
+                }
+            }
+            //获取子组件上传的值
+            eventChildVal(value){
+                //更新本地状态
+                this.setState({
+                    handleVal:value
+                })
+            }
+            //更新传递的值
+            sendChildVal(val){
+                this.setState({
+                    data:val
+                })
+            }
+            render(){
+                return <div>
+                    <Times/>
+                    <div>------------------------</div>
+                    <span>child components:</span>
+                    <Head
+                        sendVal = {this.state.data}
+                        handleFun = {this.eventChildVal.bind(this)}
+                    >
+                    </Head>
+                    <div>------------------------</div>
+                    <span>father components:</span>
+                    {
+                        //父传子及子传父 都是遵循写法传递的三种均可
+                        // 1.bind改变this指向
+                        // 2.在constrator里重写函数，bind改变this指向
+                        // 3.定义函数时直接使用箭头函数
+                    }
+                    <button onClick ={this.sendChildVal.bind(this,'i am a backVal')}>父组件数据下钻</button>
+                    <div>子组件上传的数据：{this.state.handleVal}</div>
+                </div>
+            }
+        }
+        ReactDOM.render(
+            <Element/>,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+
+</html>
