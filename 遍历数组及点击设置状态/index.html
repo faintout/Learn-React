@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="../node_modules/babel-standalone/babel.js"></script>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="../node_modules/moment/moment.js"></script>
+    <style>
+        .Font28{
+            font-size: 28px;
+        }
+    </style>
+    <script type="text/babel">
+        class Element extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    data:'is test data',
+                    statusList : [false,true,true],
+                    dataList:[{name:1,list:['1-1','1-2','1-3']},{name:2,list:['2-1','2-2','3-3']},{name:3,list:['3-1','3-2','3-3']}]        
+                }
+            }
+           	handleFun(index){
+                   let stateList = this.state.statusList
+                   stateList[index] = !stateList[index]
+                   this.setState({
+                        stateList
+                   })
+            }
+            render(){
+                return <div>
+                {
+                    this.state.dataList.map((data,index)=>{
+                       return <div  key = {index} onClick = {this.handleFun.bind(this,index)}>
+                        <h2>{data.name}</h2>
+                            {this.state.statusList[index]&&(<div>
+                                {
+                                data.list.map((item,i)=>{
+                                    return <div key = {i}> {item}</div>
+                                })
+                            }
+                            </div>)}
+                        </div>
+                    })
+                }
+                    </div>        
+            }
+        }
+
+        ReactDOM.render(
+            <Element>
+            </Element>,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+
+</html>
