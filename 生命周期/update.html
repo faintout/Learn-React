@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="../node_modules/babel-standalone/babel.js"></script>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="../node_modules/moment/moment.js"></script>
+    <style>
+        .Font28{
+            font-size: 28px;
+        }
+    </style>
+    <script type="text/babel">
+        class Element extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {
+                    data:props.newData
+                }
+                console.log('01-组建初始化')
+            }
+            UNSAFE_componentWillReceiveProps(nextProps){
+                console.log('02-父组建的更新会触发这个函数')
+            }
+            shouldComponentUpdate(nextProps,nextState){
+                console.log('03-是否需要更新函数');
+                //默认为true
+                return true
+            }
+            UNSAFE_componentWillUpdate(nextProps,nextState){
+                console.log('04-组建即将更新的过程');
+            }
+            componentDidUpdate(nextProps,nextState){
+                console.log('06-组建完成更新');
+            }
+            render(){
+                console.log('05-组建渲染过程');
+                return <div>
+                {
+                    this.props.newData
+                }
+                    </div>        
+            }
+        }
+        class App extends React.Component{
+            constructor(){
+                super(...arguments)
+                this.state = {
+                    data:'this is App Components'
+                }
+            }
+            //16.x警告，17.0 将删除componentWillMount，componentWillReceiveProps和componentWillUpdate，故使用前缀UNSAFE_
+            changeData=()=>{
+                console.log('1');
+                this.setState({
+                    data:'i im App changeValue'
+                })
+                console.log( this.state);
+            }
+            render(){
+                return (
+                    <div>App Component
+                        <Element
+                            newData={this.state.data}
+                        ></Element>
+                        <button
+                        onClick=  {this.changeData}
+                        >changeAppData</button>
+                    </div>
+                )
+            }
+        }
+        
+
+        ReactDOM.render(
+            <App></App>,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+
+</html>

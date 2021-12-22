@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="../node_modules/babel-standalone/babel.js"></script>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="../node_modules/moment/moment.js"></script>
+    <style>
+        .Font28 {
+            font-size: 28px;
+        }
+    </style>
+    <script type="text/babel">
+        class Element extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {
+                    data:props.newData
+                }
+                console.log('init-01-组件初始化')
+            }
+            //16.x警告，17.0 将删除componentWillMount，componentWillReceiveProps和componentWillUpdate，故使用前缀UNSAFE_
+            //组件mount
+            UNSAFE_componentWillMount(){
+                console.log('mount-01-组件将要挂载')
+            }
+            componentDidMount(){
+                console.log('mount-03-组件完成挂载')
+            }
+            //undate
+            UNSAFE_componentWillReceiveProps(nextProps){
+                console.log('update-01-父组建的更新会触发这个函数')
+            }
+            shouldComponentUpdate(nextProps,nextState){
+                console.log('update-02-是否需要更新函数');
+                //默认为true
+                return true
+            }
+            UNSAFE_componentWillUpdate(nextProps,nextState){
+                console.log('update-03-组建即将更新的过程');
+            }
+            componentDidUpdate(nextProps,nextState){
+                console.log('update-05-组建完成更新');
+            }
+            //unMount
+            componentWillUnmount(){
+                console.log('unMount-01-组件注销');
+            }
+            render(){
+                console.log('mount/update-组建渲染过程');
+                return <div>
+                {
+                    this.props.newData
+                }
+                    </div>        
+            }
+        }
+        class App extends React.Component{
+            constructor(){
+                super(...arguments)
+                this.state = {
+                    data:'this is App Components',
+                    isShowEle:true
+                }
+            }
+            changeData=()=>{
+                console.log('1');
+                this.setState({
+                    data:'i im App changeValue',
+
+                })
+            }
+            umMount = ()=>{
+                this.setState({
+                    isShowEle:false
+                })
+            }
+            render(){
+                return (
+                    <div>App Component
+                        {this.state.isShowEle&&<Element
+                            newData={this.state.data}
+                        ></Element>}
+                        <br/>
+                        <button
+                        onClick=  {this.changeData}
+                        >changeAppData</button>
+                        <br/>
+                        <button
+                        onClick=  {this.umMount}
+                        >unMountComponent</button>
+                    </div>
+                )
+            }
+        }
+        
+
+        ReactDOM.render(
+            <App></App>,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+
+</html>

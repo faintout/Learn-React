@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="../node_modules/babel-standalone/babel.js"></script>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="../node_modules/moment/moment.js"></script>
+    <style>
+        .Font28{
+            font-size: 28px;
+        }
+    </style>
+    <script type="text/babel">
+        class App extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    data:'this is App Components'
+                }
+                console.log('01-组件init初始化')
+            }
+            //16.x警告，17.0 将删除componentWillMount，componentWillReceiveProps和componentWillUpdate，故使用前缀UNSAFE_
+            render(){
+                return (
+                    <div>App Component
+                    </div>
+                )
+            }
+        }
+        
+
+        ReactDOM.render(
+            <App></App>,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+
+</html>
