@@ -1,5 +1,7 @@
 node_modules/
 .history/
 .git/
-react-router/node_modules/
-react-router/.history/
+react-router-v5/node_modules/
+react-router-v5/.history/
+react-router-v6/node_modules/
+react-router-v6/.history/

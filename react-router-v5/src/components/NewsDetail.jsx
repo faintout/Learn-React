@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 export default class NewsDetail extends Component {
     render() {
-        console.log('this.props',window.location)
+        let {id} = this.props.match.params
         return (
             <div>
-                 {window.location.pathname}
+              组件ID：  
+                 {id}
             </div>
         )
     }
