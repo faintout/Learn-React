@@ -15,7 +15,7 @@ function reducer(state=0,action){
 let store= createStore(reducer)
 
 function listener(){
-   let value =  store.getState()
+//    let value =  store.getState()
    console.log('value',value);
 }
 

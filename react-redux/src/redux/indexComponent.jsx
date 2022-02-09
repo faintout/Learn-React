@@ -25,3 +25,10 @@ export function reducer(state=0,action){
 export function returnType(type){
     return {type}
 }
+export function addSync(){
+    return dispatch=>{
+        setTimeout(()=>{
+            dispatch(returnType('add'))
+        },1000)
+    }
+}
