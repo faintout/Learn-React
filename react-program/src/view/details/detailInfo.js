@@ -5,6 +5,7 @@ import TextTag from '../../components/textTag'
 import Commit from './commit'
 import {connect} from "react-redux"
 import axios from 'axios'
+import moment from 'moment'
 class DetailInfo extends Component {
     constructor(args){
         super(args)
@@ -35,8 +36,8 @@ class DetailInfo extends Component {
                             <TextTag data={this.props.data
                             }></TextTag>
                             <Avatar src={author?.avatar_url}></Avatar>
-                            <Link to={'/user/'+author.loginname}> {author.loginname}  </Link>
-                            发表于：{create_at}
+                            <Link to={'/user/'+author?.loginname}> {author?.loginname}  </Link>
+                            发表于：{moment(create_at).format('lll')}
                         </div>
                     }>
 

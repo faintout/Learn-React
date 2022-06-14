@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Avatar, List } from "antd"
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 // let arr = []
 // const typeList = ['top', 'good', 'ask', 'job', 'test', 'share']
 // for (let i = 0; i < 50; i++) {
@@ -23,7 +24,7 @@ class Commit extends Component {
                         item => (
                             <List.Item
                                 actions={[
-                                    "有" + item.ups.length + "位用户点赞了",
+                                    item.ups.length?(<div><img src={require("../../assets/images/zan.png")}></img> {item.ups.length}</div> ):null,
                                 ]}
                             >
                                 <List.Item.Meta
@@ -33,11 +34,12 @@ class Commit extends Component {
                                     title={
                                         <p>
                                             <Link to={'/user/' + item.author.loginname}>{item.author.loginname}</Link>  
-                                            &nbsp;&nbsp;发表与：{item.create_at}
+                                            &nbsp;&nbsp;发表与：{moment(item.create_at).format('lll')}
                                         </p>
                                     }
                                     description={
                                         <div
+                                        className='commit-content'
                                         dangerouslySetInnerHTML={{
                                             __html:item.content
                                         }}>
