@@ -15,9 +15,12 @@ class IndexList extends Component {
         this.getListData('all')
     }
     getListData(type) {
-        this.props.dispatch(async dispatch => {
-            let { data: { data: dataList } } = await axios.get(`https://cnodejs.org/api/v1/topics?tab=${type}&page=${this.state.pageSize}&limit=20`)
-            await dispatch({ 'type': 'updateDataList', data: dataList })
+        return new Promise(res=>{
+            this.props.dispatch(async dispatch => {
+                let { data: { data: dataList } } = await axios.get(`https://cnodejs.org/api/v1/topics?tab=${type}&page=${this.state.pageSize}&limit=20`)
+                await dispatch({ 'type': 'updateDataList', data: dataList })
+                res()
+            })
         })
     }
     // componentDidUpdate() {
@@ -42,12 +45,18 @@ class IndexList extends Component {
     //         tab: nextProps.tab
     //     }
     // }
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log(nextProps.tab,)
-        if (nextProps.tab !== nextState.tab) {
-            this.getListData(nextProps.tab)
+    async shouldComponentUpdate(nextProps, nextState) {
+        console.log(nextProps.tab,this.props.tab)
+        if (nextProps.tab !== this.props.tab) {
+            await this.getListData(nextProps.tab)
+            return true
         }
-        return true
+        // if(this.state.tab!==nextState.tab){
+        //     this.getListData(nextProps.tab)
+        //     return true
+        // }
+        
+        return false
     }
     // UNSAFE_componentWillReceiveProps(nextProps){
     //     console.log('update-01-父组建的更新会触发这个函数')

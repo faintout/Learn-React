@@ -15,9 +15,12 @@ class DetailInfo extends Component {
     }
     //获取文章详情
     getDetailInfo(){
-        this.props.dispatch(async dispatch => {
-            let { data: { data: detailInfo } } = await axios.get(`https://cnodejs.org/api/v1/topic/${this.state.detailId}`)
-            await dispatch({ 'type': 'updateDetailInfo', data: detailInfo })
+        return new Promise(res=>{
+            this.props.dispatch(async dispatch => {
+                let { data: { data: detailInfo } } = await axios.get(`https://cnodejs.org/api/v1/topic/${this.state.detailId}`)
+                await dispatch({ 'type': 'updateDetailInfo', data: detailInfo })
+                res()
+            })
         })
     }
     render() {
@@ -31,7 +34,7 @@ class DetailInfo extends Component {
                         <div> <h2>{title}</h2>
                             <TextTag data={this.props.data
                             }></TextTag>
-                            <Avatar src={author.avatar_url}></Avatar>
+                            <Avatar src={author?.avatar_url}></Avatar>
                             <Link to={'/user/'+author.loginname}> {author.loginname}  </Link>
                             发表于：{create_at}
                         </div>

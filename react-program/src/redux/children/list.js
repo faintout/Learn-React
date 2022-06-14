@@ -4,8 +4,7 @@ function list(state = {
 }, action) {
     switch (action.type) {
         case 'updateDataList':
-            state.data = action.data
-            return state
+            return Object.assign({},state,{data:action.data})
         default:
             return state
     }

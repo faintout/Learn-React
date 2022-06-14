@@ -5,8 +5,7 @@ function details(state = {
 }, action) {
     switch (action.type) {
         case 'updateDetailInfo':
-            state.data = action.data
-            return Object.assign({},state)
+            return Object.assign({},state,{data:action.data})
         default:
             return state
     }
