@@ -1,0 +1,6 @@
+/* antd样式重写 */
+/* 分页部分 */
+.ant-pagination{
+    text-align: center;
+    margin: 10px 0 !important;
+}

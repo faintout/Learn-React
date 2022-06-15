@@ -1,4 +1,5 @@
 @import url('./commit.css');
+@import url('./antd.css');
 .header_border{
     height: 64px;
 }
