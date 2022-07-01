@@ -13,7 +13,8 @@ export default class Game extends React.Component {
             xIsNext: true,
             jumpStep: 0,
             //是否升序
-            isAsc:true
+            isAsc:true,
+            winValue:null
         }
     }
     handleClick(i) {
@@ -23,7 +24,7 @@ export default class Game extends React.Component {
         let current = history[this.state.jumpStep]
         let squares = current.squares.slice()
         //判断当前是否有值或是否有人胜出
-        if (calculateWinner(squares) || squares[i]) {
+        if ( calculateWinner(squares)?.isWin|| squares[i]) {
             return;
         }
         //下一个谁出手
@@ -32,7 +33,8 @@ export default class Game extends React.Component {
         this.setState({
             history: history.concat([{squares:squares,coord:[Math.floor(i/3),i%3]}]),
             xIsNext: !this.state.xIsNext,
-            jumpStep: ++this.state.jumpStep
+            jumpStep: ++this.state.jumpStep,
+            winValue:calculateWinner(squares)?.value||null
         });
     }
     jumpTo(index) {
@@ -54,8 +56,8 @@ export default class Game extends React.Component {
         //判断棋局状态
         const winner = calculateWinner(current);
         let status;
-        if (winner) {
-            status = 'Winner: ' + winner;
+        if (winner?.isWin) {
+            status = 'Winner: ' + winner.isWin;
         } else {
             status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
@@ -77,6 +79,7 @@ export default class Game extends React.Component {
                     <Board
                         history={current}
                         onClick={(i) => this.handleClick(i)}
+                        winValue={this.state.winValue}
                     />
                 </div>
                 <div className="game-info">
@@ -104,7 +107,7 @@ function calculateWinner(squares) {
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c] = lines[i];
         if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            return squares[a];
+            return {isWin:squares[a],value:lines[i]};
         }
     }
     return null;

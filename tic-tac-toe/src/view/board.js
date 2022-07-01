@@ -2,11 +2,15 @@ import Square from './square';
 import React, { Component } from 'react'
 export default class Board extends React.Component {
     renderSquare(i) {
-        return <Square
-            key={i}
-            value={this.props.history[i]}
-            onClick={() => this.props.onClick(i)}
-        />;
+        return (
+        // <span>
+            <Square
+                key={i}
+                value={this.props.history[i]}
+                isWinner ={this.props.winValue?.includes(i)}
+                onClick={() => this.props.onClick(i)}
+            />
+        )
     }
     renderBox(){
        return Array(3).fill(null).map((step1,index1)=>{

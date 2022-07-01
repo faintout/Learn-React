@@ -12,10 +12,13 @@
 //     }
 //   }
 
-
+import classnames from 'classnames';
   function Square(props) {
     return (
-      <button className="square" onClick={props.onClick}>
+      <button 
+      onClick={props.onClick} 
+      className={classnames({'win-line': props.isWinner,square:true})}
+      >
         {props.value}
       </button>
     );
