@@ -11,7 +11,7 @@ export default class Game extends React.Component {
                 },
             ],
             xIsNext: true,
-            jumpStep: 0
+            jumpStep: 0,
         }
     }
     handleClick(i) {
@@ -53,13 +53,14 @@ export default class Game extends React.Component {
             status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
         //展示当前历史列表
-        const moves = this.state.history.map((step, move) => {
+        const allHistory = this.state.isAsc?this.state.history:this.state.history.reverse()
+        const moves = allHistory.map((step, move) => {
             const desc = move ?
                 'Go to move #' + move  + ', coord :'+ step.coord[0] + ',' + step.coord[1]: 
                 'Go to game start';
             return (
                 <li key={move}>
-                    <button onClick={() => { this.jumpTo(move) }}>{desc}</button>
+                    <button onClick={() => { this.jumpTo(move) }} className={[move===this.state.jumpStep?'fw-800':'']}>{desc}</button>
                 </li>
             )
         })

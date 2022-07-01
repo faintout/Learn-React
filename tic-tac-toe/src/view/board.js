@@ -3,15 +3,46 @@ import React, { Component } from 'react'
 export default class Board extends React.Component {
     renderSquare(i) {
         return <Square
+            key={i}
             value={this.props.history[i]}
             onClick={() => this.props.onClick(i)}
         />;
     }
+    renderBox(){
+       return Array(3).fill(null).map((step1,index1)=>{
+            const boardRow = Array(3).fill(null).map((step2,index2)=>{
+                    return (
+                        this.renderSquare(index1*3+index2)
+                    )
+            })
+
+            return (
+                <div className="board-row">
+                    {boardRow}
+                </div>
+            )
+            
+        })
+    }
     render() {
+        const board =  Array(3).fill(null).map((step1,index1)=>{
+            const boardRow = Array(3).fill(null).map((step2,index2)=>{
+                    return (
+                        this.renderSquare(index1*3+index2)
+                    )
+            })
+
+            return (
+                <div className="board-row" key={index1}>
+                    {boardRow}
+                </div>
+            )
+            
+        })
         return (
             <div>
                 {/* <div className="status">{status}</div> */}
-                <div className="board-row">
+                {/* <div className="board-row">
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}
                     {this.renderSquare(2)}
@@ -25,7 +56,8 @@ export default class Board extends React.Component {
                     {this.renderSquare(6)}
                     {this.renderSquare(7)}
                     {this.renderSquare(8)}
-                </div>
+                </div> */}
+                {board}
             </div>
         );
     }
