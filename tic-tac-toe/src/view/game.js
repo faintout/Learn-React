@@ -53,8 +53,7 @@ export default class Game extends React.Component {
             status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
         //展示当前历史列表
-        const allHistory = this.state.isAsc?this.state.history:this.state.history.reverse()
-        const moves = allHistory.map((step, move) => {
+        const moves = this.state.history.map((step, move) => {
             const desc = move ?
                 'Go to move #' + move  + ', coord :'+ step.coord[0] + ',' + step.coord[1]: 
                 'Go to game start';
