@@ -28,7 +28,7 @@ export default class Game extends React.Component {
         squares[i] = this.state.xIsNext ? 'X' : 'O';
         //下棋结束，更新数据
         this.setState({
-            history: history.concat([{squares:squares}]),
+            history: history.concat([{squares:squares,coord:[Math.floor(i/3),i%3]}]),
             xIsNext: !this.state.xIsNext,
             jumpStep: ++this.state.jumpStep
         });
@@ -55,7 +55,7 @@ export default class Game extends React.Component {
         //展示当前历史列表
         const moves = this.state.history.map((step, move) => {
             const desc = move ?
-                'Go to move #' + move  + ', coord :' : 
+                'Go to move #' + move  + ', coord :'+ step.coord[0] + ',' + step.coord[1]: 
                 'Go to game start';
             return (
                 <li key={move}>
