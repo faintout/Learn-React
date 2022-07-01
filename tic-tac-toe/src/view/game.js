@@ -12,6 +12,8 @@ export default class Game extends React.Component {
             ],
             xIsNext: true,
             jumpStep: 0,
+            //是否升序
+            isAsc:true
         }
     }
     handleClick(i) {
@@ -40,6 +42,11 @@ export default class Game extends React.Component {
             xIsNext: !index % 2
         })
     }
+    changeAsc(flag){
+        this.setState({
+            isAsc: flag,
+        })
+    }
     render() {
         //查找当前渲染的数组
         const history = this.state.history[this.state.jumpStep];
@@ -53,7 +60,8 @@ export default class Game extends React.Component {
             status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
         //展示当前历史列表
-        const moves = this.state.history.map((step, move) => {
+        // const allHistory = this.state.isAsc?this.state.history:this.state.history.reverse()
+        const moves = this.state.history.map((step, move) => { 
             const desc = move ?
                 'Go to move #' + move  + ', coord :'+ step.coord[0] + ',' + step.coord[1]: 
                 'Go to game start';
@@ -73,7 +81,10 @@ export default class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <ol>{moves}</ol>
+                    列表展示方式：
+                    <button className={[this.state.isAsc?'fw-800':'']} onClick={()=>this.changeAsc(true)}>升序</button>
+                    <button className={[!this.state.isAsc?'fw-800':'']} onClick={()=>this.changeAsc(false)}>降序</button>
+                    <ol>{this.state.isAsc?moves:moves.reverse()}</ol>
                 </div>
             </div>
         );
