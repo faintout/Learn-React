@@ -5,7 +5,10 @@ export default class Game extends React.Component {
         super(props)
         this.state = {
             history: [
-                Array(9).fill(null),
+                {
+                    squares: Array(9).fill(null),
+                    coord:[]
+                },
             ],
             xIsNext: true,
             jumpStep: 0
@@ -15,7 +18,8 @@ export default class Game extends React.Component {
         //点击时找出截至(当前步骤)的数组，使用拷贝方式(防止影响原始数据)
         let history = this.state.history.slice(0,this.state.jumpStep+1)
         //找出当前的棋数组，使用拷贝方式(防止影响原始数据)
-        let squares = [...history[this.state.jumpStep]]
+        let current = history[this.state.jumpStep]
+        let squares = current.squares.slice()
         //判断当前是否有值或是否有人胜出
         if (calculateWinner(squares) || squares[i]) {
             return;
@@ -24,7 +28,7 @@ export default class Game extends React.Component {
         squares[i] = this.state.xIsNext ? 'X' : 'O';
         //下棋结束，更新数据
         this.setState({
-            history: history.concat([squares]),
+            history: history.concat([{squares:squares}]),
             xIsNext: !this.state.xIsNext,
             jumpStep: ++this.state.jumpStep
         });
@@ -38,7 +42,8 @@ export default class Game extends React.Component {
     }
     render() {
         //查找当前渲染的数组
-        const current = this.state.history[this.state.jumpStep];
+        const history = this.state.history[this.state.jumpStep];
+        const current = history.squares
         //判断棋局状态
         const winner = calculateWinner(current);
         let status;
@@ -50,7 +55,7 @@ export default class Game extends React.Component {
         //展示当前历史列表
         const moves = this.state.history.map((step, move) => {
             const desc = move ?
-                'Go to move #' + move :
+                'Go to move #' + move  + ', coord :' : 
                 'Go to game start';
             return (
                 <li key={move}>
