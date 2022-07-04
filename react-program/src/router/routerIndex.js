@@ -4,6 +4,7 @@ import About from '../view/about'
 import Book from '../view/book'
 import Details from '../view/details'
 import Index from '../view/index'
+import User from '../view/user'
 export default class RouterIndex extends Component {
     render() {
         return (
@@ -14,6 +15,7 @@ export default class RouterIndex extends Component {
                 }/>
                 <Route path='/details/:id' component={Details}></Route>
                 <Route path='/index/:id' component={Index}></Route>
+                <Route path='/user/:id' component={User}></Route>
                 <Route path='/book' component={Book}></Route>
                 <Route path='/about' component={About}></Route>
               </Switch>

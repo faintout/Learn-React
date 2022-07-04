@@ -3,6 +3,9 @@
 .header_border{
     height: 64px;
 }
+.cur-pointer{
+    cursor: pointer;
+}
 .header{
     /* display: flex; */
     text-align: center;
@@ -98,4 +101,21 @@
 
 .detail-content img{
     width: 100%;
+}
+
+
+/* user */
+.user-content .user-info{
+    text-align: center;
+}
+.user-info>div{
+    padding: 2px 0 ;
+}
+.user-content .user-img img{
+    width:40px;
+    height: 40px;
+    border-radius: 3px;
+}
+.pd-10{
+    padding: 10px !important;
 }
