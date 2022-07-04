@@ -13,23 +13,7 @@ export default class Board extends React.Component {
         )
     }
     renderBox(){
-       return Array(3).fill(null).map((step1,index1)=>{
-            const boardRow = Array(3).fill(null).map((step2,index2)=>{
-                    return (
-                        this.renderSquare(index1*3+index2)
-                    )
-            })
-
-            return (
-                <div className="board-row">
-                    {boardRow}
-                </div>
-            )
-            
-        })
-    }
-    render() {
-        const board =  Array(3).fill(null).map((step1,index1)=>{
+        return  (Array(3).fill(null).map((step1,index1)=>{
             const boardRow = Array(3).fill(null).map((step2,index2)=>{
                     return (
                         this.renderSquare(index1*3+index2)
@@ -42,7 +26,9 @@ export default class Board extends React.Component {
                 </div>
             )
             
-        })
+        }))
+    }
+    render() {
         return (
             <div>
                 {/* <div className="status">{status}</div> */}
@@ -61,7 +47,7 @@ export default class Board extends React.Component {
                     {this.renderSquare(7)}
                     {this.renderSquare(8)}
                 </div> */}
-                {board}
+                {this.renderBox()}
             </div>
         );
     }

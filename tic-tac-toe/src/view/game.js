@@ -8,7 +8,6 @@ export default class Game extends React.Component {
                 {
                     squares: Array(9).fill(null),
                     coord:[],
-                    winValue:[]
                 },
             ],
             xIsNext: true,
@@ -29,13 +28,15 @@ export default class Game extends React.Component {
         if ( calculateWinner(squares)?.isWin|| squares[i]) {
             return;
         }
+        //添加一个新的值
+        const newHistory = history.concat([{squares:squares,coord:[Math.floor(i/3),i%3]}])
         //下一个谁出手
         squares[i] = this.state.xIsNext ? 'X' : 'O';
-        const winValue = calculateWinner(history.concat([{squares:squares,coord:[Math.floor(i/3),i%3]}])[this.state.jumpStep+1].squares)?.value||null
-        console.log(winValue);
+        //判断是否有人胜出
+        const winValue = calculateWinner(newHistory[this.state.jumpStep+1].squares)?.value||null
         //下棋结束，更新数据
         this.setState({
-            history: history.concat([{squares:squares,coord:[Math.floor(i/3),i%3],winValue}]),
+            history: newHistory,
             xIsNext: !this.state.xIsNext,
             jumpStep: ++this.state.jumpStep,
             winValue:winValue
@@ -45,8 +46,9 @@ export default class Game extends React.Component {
         //跳转回合
         this.setState({
             jumpStep: index,
-            xIsNext: !index % 2,
-            winValue:this.state.history[index].winValue
+            xIsNext: !(index % 2),
+            //重新判断棋局状态
+            winValue:calculateWinner(this.state.history[index].squares)?.value||null
         })
     }
     changeAsc(flag){
