@@ -14,7 +14,6 @@ class IndexList extends Component {
             // dataList:[],
             tab: ''
         }
-        this.getListData('all')
     }
     getListData(type) {
         return new Promise(res=>{
@@ -24,6 +23,9 @@ class IndexList extends Component {
                 res()
             })
         })
+    }
+    componentDidMount(){
+        this.getListData('all')
     }
     // componentDidUpdate() {
 
