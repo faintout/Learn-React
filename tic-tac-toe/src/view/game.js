@@ -7,13 +7,15 @@ export default class Game extends React.Component {
             history: [
                 {
                     squares: Array(9).fill(null),
-                    coord:[]
+                    coord:[],
+                    winValue:[]
                 },
             ],
             xIsNext: true,
             jumpStep: 0,
             //是否升序
             isAsc:true,
+            //用于时间回溯时判断是否胜出
             winValue:null
         }
     }
@@ -29,19 +31,22 @@ export default class Game extends React.Component {
         }
         //下一个谁出手
         squares[i] = this.state.xIsNext ? 'X' : 'O';
+        const winValue = calculateWinner(history.concat([{squares:squares,coord:[Math.floor(i/3),i%3]}])[this.state.jumpStep+1].squares)?.value||null
+        console.log(winValue);
         //下棋结束，更新数据
         this.setState({
-            history: history.concat([{squares:squares,coord:[Math.floor(i/3),i%3]}]),
+            history: history.concat([{squares:squares,coord:[Math.floor(i/3),i%3],winValue}]),
             xIsNext: !this.state.xIsNext,
             jumpStep: ++this.state.jumpStep,
-            winValue:calculateWinner(squares)?.value||null
+            winValue:winValue
         });
     }
     jumpTo(index) {
         //跳转回合
         this.setState({
             jumpStep: index,
-            xIsNext: !index % 2
+            xIsNext: !index % 2,
+            winValue:this.state.history[index].winValue
         })
     }
     changeAsc(flag){
@@ -58,6 +63,8 @@ export default class Game extends React.Component {
         let status;
         if (winner?.isWin) {
             status = 'Winner: ' + winner.isWin;
+        }else if (!winner&&this.state.jumpStep===9) {
+            status = 'all lost ,You all idiots';
         } else {
             status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
